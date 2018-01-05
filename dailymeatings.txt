@@ -1,0 +1,63 @@
+dia 12/12/2017
+Adrián
+
+**Qué hice ayer? **  Empecé a crear el botón eliminar una única respuesta
+**Qué voy a hacer hoy?** Continuar con el botón
+**Qué problema me puedo encontrar?** Que no funcione correctamente
+Andrea
+
+**Qué hice ayer? **  Empecé a modificar la pagina principal
+**Qué voy a hacer hoy?** Acabar la pagina principal y empezar con la parte de login
+**Qué problema me puedo encontrar?** Que algo se muestre mal
+
+
+dia 13/12/2017
+Adrián
+
+**Qué hice ayer? **  Crear el botón eliminar un único botón
+**Qué voy a hacer hoy?** Crear fecha por horas
+**Qué problema me puedo encontrar?** Que no recoja el formato de la hora correctamente 
+Andrea
+
+**Qué hice ayer? **  Cambios BBDD, cambio login, consultas pendientes y realizadas
+**Qué voy a hacer hoy?** registro de usuarios
+**Qué problema me puedo encontrar?** no testeo del cambio
+
+
+dia 14/12/2017
+Adrián
+
+**Qué hice ayer? **  Crear fecha hora
+**Qué voy a hacer hoy?** Acabar fecha hora y empezar boton subir/bajar respuesta
+**Qué problema me puedo encontrar?** Dificultades a la hoar de subir o bajar la respuesta 
+Andrea
+
+**Qué hice ayer? **  registro de usuarios
+**Qué voy a hacer hoy?** acabar registro usuarios
+**Qué problema me puedo encontrar?** Encriptación de las contraseñas
+
+
+dia 15/12/2017
+Adrián
+
+**Qué hice ayer? ** Intentar crear la validación de las horas
+**Qué voy a hacer hoy?** Acabar la validación y empezar boton subir/bajar respuesta
+**Qué problema me puedo encontrar?** Dificultades para validar la hora
+Andrea
+
+**Qué hice ayer? **  acabar registro usuarios
+**Qué voy a hacer hoy?**  HTML/CSS Responsive
+**Qué problema me puedo encontrar?** Que no se vea bien en un chrome
+
+
+dia 18/12/2017
+Adrián
+
+**Qué hice ayer? ** añadir boton subir/bajar respuesta
+**Qué voy a hacer hoy?** terminar parte javascript
+**Qué problema me puedo encontrar?** No conseguir enviar mails
+Andrea
+
+**Qué hice ayer? **  encrypt y html/css
+**Qué voy a hacer hoy?**  terminar encrypt y pagina admin
+**Qué problema me puedo encontrar?** errores al encriptar

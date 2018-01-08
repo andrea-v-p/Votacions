@@ -14,14 +14,8 @@
 		session_start();                                                
 
 
-//include("/var/www/html/ProjecteVota/config.php");
-  
-  $hostname = "localhost";
-  $dbname = "ProjecteVota";
-  $username = "root";
-  $pass = "";
-    
-  $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pass");
+include("/var/www/html/ProjecteVota/config.php");
+
 
 		//FORMULARIO SI EL POST ESTA VACIO
 	if(!isset($_POST["email"])){	

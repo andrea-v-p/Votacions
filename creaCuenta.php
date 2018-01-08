@@ -10,14 +10,8 @@
 
 <?php
 
-//include("/var/www/html/ProjecteVota/config.php");
+include("/var/www/html/ProjecteVota/config.php");
   
-  $hostname = "localhost";
-  $dbname = "ProjecteVota";
-  $username = "root";
-  $pass = "";
-    
-  $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pass");
 
 
 $nombre = $_POST["nombre"];

@@ -15,14 +15,9 @@
 	<?php
 	
 
-	//include("/var/www/html/ProjecteVota/config.php");
+	include("/var/www/html/ProjecteVota/config.php");
 	
- 	$hostname = "localhost";
-    $dbname = "ProjecteVota";
-    $username = "root";
-    $pass = "";
-    
-    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pass");
+ 	
 
 
 
@@ -65,16 +60,17 @@
 				echo ("<form action='votar.php' method='post' id='form".$cont."'>");
 				while($respuesta){
 					$respuesta2 = $respuesta['Respuesta'];
+
 		
 						echo ("<div class='formu' id='formu".$cont."'>");
 
-							echo("<input type='radio' name='resp' value=".$respuesta2.">".$respuesta2);
-							echo("<input type='text' name='idPregunta' value='".$idPregunta."' readonly hidden/>");
+							echo("<input type='radio' name='resp' value='".$respuesta2."'>".$respuesta2);
 
 						    $cont++;
 							$respuesta = $query->fetch();
 						echo ("</div><br>");
 				}
+					echo("<input type='text' name='idPregunta' value='".$idPregunta."' readonly hidden/>");
 					echo("<input type='password' name='pass' required= true/>");
 					echo("<input type='submit' value='VOTA' id='votacion' /> </div>");
 				echo ("</form>");
@@ -85,12 +81,12 @@
 			$resp = $_POST["resp"];
 			$qstr = "SELECT ID_Respuesta FROM Respuestas WHERE ID_Pregunta =".$_POST["idPregunta"]." AND Respuesta = '".$resp."'";
 
-			$query = $pdo->prepare( $qstr );
-			$query->execute();
+			$queryIdResp = $pdo->prepare( $qstr );
+			$queryIdResp->execute();
 			
-			$respuesta = $query->fetch();
+			$respuesta = $queryIdResp->fetch();
 
-
+			
 
 			$query = $pdo->prepare("SELECT ID FROM Usuarios WHERE Email = '".$nombre."'");
 			$query->execute();
@@ -114,20 +110,23 @@
 				//$query->execute(array($respuesta["ID_Respuesta"], $encontrarHash["hash_enc"], $_POST["pass"]));
 	
 	//COMPROVACIÓN PASSWORD			
-				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Nombre = ".$nombre);
+				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Email = '".$nombre."'");
 				$queryPass->execute();
 				$psswrd = $queryPass->fetch();
 				
 			$contra_enc = hash("sha256", $_POST["pass"]);
 			
-			if($psswrd[0] == $contra_enc){
+
+			if(strcmp($psswrd[0], $contra_enc)===0){
 				
-				$query = $pdo->prepare("SELECT ID_Respuesta FROM Votaciones = WHERE hash = AES_DECRYPT(? , ?)");
+				$query = $pdo->prepare("SELECT hash FROM Votaciones = WHERE hash = AES_DECRYPT(? , ?)");
 				$query->execute(array($encontrarHash["hash_enc"], $_POST["pass"]));
 				$idRespuesta = $query->fetch();
 				
-				$query2 = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ? WHERE hash = AES_DECRYPT(? , ?)");
-				$query2->execute(array($idRespuesta["ID_Respuesta"]));
+				
+
+				$query2 = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ? WHERE hash = ?");
+				$query2->execute(array($respuesta["ID_Respuesta"], $idRespuesta['hash']));
 				
 			
 					echo ("Respuesta modificada con exito!");
@@ -142,7 +141,7 @@
 			}else{
 				$hash = generaPass();
 	//COMPROVACIÓN PASSWORD	
-				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Nombre = ".$nombre);
+				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Email = '".$nombre."'");
 				$queryPass->execute();
 				$psswrd = $queryPass->fetch();
 				

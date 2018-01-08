@@ -108,16 +108,33 @@
 				$encontrarHash = $query2->fetch();
 	//DESENCRYPT
 				//$hash_dec = AES_DECRYPT($encontrarHash["hash_enc"], $_POST["pass"]);
-
-				$query = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ? WHERE hash = AES_DECRYPT(? , ?)");
-
+				
+				//$query = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ? WHERE hash = AES_DECRYPT(? , ?)");
 				// $query = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ".$respuesta["ID_Respuesta"]." WHERE hash ='".$encontrarHash["hash_enc"]."'");
-				$query->execute(array($respuesta["ID_Respuesta"], $encontrarHash["hash_enc"], $_POST["pass"]));
-
+				//$query->execute(array($respuesta["ID_Respuesta"], $encontrarHash["hash_enc"], $_POST["pass"]));
+	
 	//COMPROVACIÓN PASSWORD			
+				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Nombre = ".$nombre);
+				$queryPass->execute();
+				$psswrd = $queryPass->fetch();
+				
+			$contra_enc = hash("sha256", $_POST["pass"]);
+			
+			if($psswrd[0] == $contra_enc){
+				
+				$query = $pdo->prepare("SELECT ID_Respuesta FROM Votaciones = WHERE hash = AES_DECRYPT(? , ?)");
+				$query->execute(array($encontrarHash["hash_enc"], $_POST["pass"]));
+				$idRespuesta = $query->fetch();
+				
+				$query2 = $pdo->prepare("UPDATE Votaciones SET ID_Respuesta = ? WHERE hash = AES_DECRYPT(? , ?)");
+				$query2->execute(array($idRespuesta["ID_Respuesta"]));
+				
+			
 					echo ("Respuesta modificada con exito!");
 				
-					
+			}else{
+				echo ("Error en la contraseña");	
+			}
 				
 
 
@@ -125,25 +142,33 @@
 			}else{
 				$hash = generaPass();
 	//COMPROVACIÓN PASSWORD	
+				$queryPass = $pdo->prepare("SELECT Password FROM Usuarios WHERE Nombre = ".$nombre);
+				$queryPass->execute();
+				$psswrd = $queryPass->fetch();
+				
+				$contra_enc = hash("sha256", $_POST["pass"]);
+			
+				if($psswrd[0] == $contra_enc){
 	//ENCRYPT
 				//$hash_enc = AES_ENCRYPT($hash, $_POST["pass"]);
 
-				$query = $pdo->prepare("INSERT INTO relacionusuariovota(ID_Usuario, ID_Pregunta, hash_enc) 
+					$query = $pdo->prepare("INSERT INTO relacionusuariovota(ID_Usuario, ID_Pregunta, hash_enc) 
 										VALUES (?, ?, AES_ENCRYPT(?,?) )");
 				
 
-				$query->execute(array($id[0], $_POST['idPregunta'], $hash, $_POST['pass']));
+					$query->execute(array($id[0], $_POST['idPregunta'], $hash, $_POST['pass']));
 
 
-				$query2 = $pdo->prepare("INSERT INTO Votaciones(hash, ID_Respuesta) 
+					$query2 = $pdo->prepare("INSERT INTO Votaciones(hash, ID_Respuesta) 
 										VALUES (?, ?)");
 
-				$query2->execute(array($hash, $respuesta[0]));
+					$query2->execute(array($hash, $respuesta[0]));
 
-				echo ("Respuesta guardada con exito!");
+					echo ("Respuesta guardada con exito!");
+				}else{
+					echo ("Error en la contraseña");
+				}
 			}
-				
-			
 		}
 
 function generaPass(){
